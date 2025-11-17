@@ -6,7 +6,7 @@
 
 This demo app showcases a real-time application of FindSurface to detect geometric shapes in point clouds provided by ARCore.
 
-The project retrieves the result of [`acquirePointCloud()`](https://developers.google.com/ar/reference/java/com/google/ar/core/Frame#acquirePointCloud()), then uses FindSurface to detect geometry and overlays the results in AR rendering.
+The project retrieves [ARCore's `PointCloud`](https://developers.google.com/ar/reference/java/com/google/ar/core/PointCloud), which is the result of [`frame.acquirePointCloud()`](https://developers.google.com/ar/reference/java/com/google/ar/core/Frame#acquirePointCloud()), then uses FindSurface to detect geometry and overlays the results in AR rendering.
 
 This demo runs on any Android devices with Android OS 11 (SDK 30) or later, with ARCore supported.  
 
@@ -21,7 +21,7 @@ Click the thumbnail above or [here](https://www.youtube.com/watch?v=UxBIon3GnXs)
 - Real-time detection of geometric surfaces in camera scenes;  
 - Uses input raw feature points provided by ARCore;  
 - Detected surfaces rendered as overlays (AR rendering);  
-- A UI designed for simple and intuitive detection
+- A UI designed for simple and intuitive detection;  
 - Filters samples of raw feature point cloud statistically. [See below for details](#about-filtering-pointcloud).
 
 
@@ -95,6 +95,6 @@ Unlike ARKit, ARCore provides a confidence value for each sampled point. In our 
 
 ## Pushing ARCore to Its Limits
 
-While Apple’s ARKit provides point data only within a 10‑meter radius via `rawFeaturePoints`, Google’s ARCore offers point data up to 65 meters through `acquirePointCloud()`. This difference means that one of the two technologies is largely confined to indoor use, whereas the other opens up the possibility of testing FindSurface performance even on massive outdoor architectural structures.
+While Apple’s ARKit provides point data only within a 10‑meter radius via `rawFeaturePoints`, Google’s ARCore offers point data up to 65 meters through `frame.acquirePointCloud()`. This difference means that one of the two technologies is largely confined to indoor use, whereas the other opens up the possibility of testing FindSurface performance even on massive outdoor architectural structures.
 
 [![video](https://img.youtube.com/vi/YRCeQBaCGZw/maxresdefault.jpg)](https://www.youtube.com/watch?v=YRCeQBaCGZw)
