@@ -90,7 +90,7 @@ The error distribution forms a kind of needle shape: it has a large variance in 
 
 Instead of simply averaging these samples, we use a **z-score filtering method** based on the distance of each sample from the mean position. We remove outlier samples that fall outside a certain range from the mean (±2σ, within 95%), and then use the mean of the remaining samples as the representative position of the feature. When new samples are added from other frames, we repeat the same filtering over the accumulated samples (keeping up to 100 per feature, discarding the oldest in FIFO manners if exceeded). If there is only a single sample, that point is used directly as the feature’s position without any statistical processing.  
 
-Unlike ARKit, ARCore provides a confidence value for each sampled point. In our filtering process, we utilize these confidence values as weights when computing the weighted mean position and the variance of distances from the mean. Accordingly, instead of normalizing by the total number of samples, we divide by the sum of the applied weights.  
+Unlike ARKit, ARCore provides a confidence value for each sampled point. In our filtering process, we utilize these confidence values as weights when computing the weighted mean position and the variance of distances from the mean. Accordingly, instead of normalizing by the total number of samples, we divide by the **sum of the applied weights**.  
 
 
 ## Pushing ARCore to Its Limits
