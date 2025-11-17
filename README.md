@@ -22,7 +22,7 @@ Click the thumbnail above or [here](https://www.youtube.com/watch?v=UxBIon3GnXs)
 - Uses input raw feature points provided by ARCore;  
 - Detected surfaces rendered as overlays (AR rendering);  
 - A UI designed for simple and intuitive detection
-- Filters samples of raw feature point cloud statistically. [See below for details](#about-filtering-rawfeaturepoints).
+- Filters samples of raw feature point cloud statistically. [See below for details](#about-filtering-pointcloud).
 
 
 ## User Interface
