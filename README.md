@@ -40,7 +40,7 @@ Click the thumbnail above or [here](https://www.youtube.com/watch?v=UxBIon3GnXs)
    - The camera is pointed at walls or surfaces lacking color, texture, or detail, or showing highly repetitive patterns;  
      (e.g., a plain solid-colored wall or a glass window)  
 
-   *[ARCore’s `PointCloud`](https://developer.apple.com/documentation/arcore/arframe/rawfeaturepoints) are detected within about 65m, but the farther the distance, the larger the error, which can cause the point cloud’s quality (i.e., its accuracy) to deteriorate.*
+   *[ARCore’s `PointCloud`](https://developers.google.com/ar/reference/java/com/google/ar/core/PointCloud) are detected within about 65m, but the farther the distance, the larger the error, which can cause the point cloud’s quality (i.e., its accuracy) to deteriorate.*
 
 ![main-ui.png](images/main-ui.png)
 
@@ -91,3 +91,10 @@ The error distribution forms a kind of needle shape: it has a large variance in 
 Instead of simply averaging these samples, we use a **z-score filtering method** based on the distance of each sample from the mean position. We remove outlier samples that fall outside a certain range from the mean (±2σ, within 95%), and then use the mean of the remaining samples as the representative position of the feature. When new samples are added from other frames, we repeat the same filtering over the accumulated samples (keeping up to 100 per feature, discarding the oldest in FIFO manners if exceeded). If there is only a single sample, that point is used directly as the feature’s position without any statistical processing.  
 
 Unlike ARKit, ARCore provides a confidence value for each sampled point. In our filtering process, we utilize these confidence values as weights when computing the weighted mean position and the variance of distances from the mean. Accordingly, instead of normalizing by the total number of samples, we divide by the sum of the applied weights.  
+
+
+## Pushing ARCore to Its Limits
+
+While Apple’s ARKit provides point data only within a 10‑meter radius via `rawFeaturePoints`, Google’s ARCore offers point data up to 65 meters through `acquirePointCloud()`. This difference means that one of the two technologies is largely confined to indoor use, whereas the other opens up the possibility of testing FindSurface performance even on massive outdoor architectural structures.
+
+[![video](https://img.youtube.com/vi/YRCeQBaCGZw/maxresdefault.jpg)](https://www.youtube.com/watch?v=YRCeQBaCGZw)
