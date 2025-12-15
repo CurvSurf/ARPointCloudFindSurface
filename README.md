@@ -25,6 +25,23 @@ Click the thumbnail above or [here](https://www.youtube.com/watch?v=UxBIon3GnXs)
 - Filters samples of raw feature point cloud statistically. [See below for details](#about-filtering-pointcloud).
 
 
+## Importing FindSurface-Android
+
+This project doesn't include FindSurface library for Android (AAR), so you have to download [here](https://github.com/CurvSurf/FindSurface-Android/releases/v1.0.2) and put the following line into your build.gradle.kts:
+
+```kotlin
+dependencies {
+    ... your other dependencies here ...
+    implementation(files(<path-to-the-library>/FindSurface-release.aar))
+}
+```
+
+> Q. **Why do I need to download the file manually and specify its path? Can't I use Maven?**
+>
+> A. We are preparing a proper distribution option that allows FindSurface to be used more conveniently in Android projects, just like Swift Package on iOS.  
+> In the meantime, please bear with us and use this approach.
+
+
 ## User Interface
 
 ![guide.png](images/guide.png)
