@@ -6,14 +6,10 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.ui.unit.IntSize
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.curvsurf.arpointcloudfindsurface.helpers.MotionTrackingStabilizer
-import com.curvsurf.arpointcloudfindsurface.views.AccuracyCoefficient
-import com.curvsurf.arpointcloudfindsurface.views.AccuracyConstant
-import com.curvsurf.arpointcloudfindsurface.views.LinearFunction
 import com.curvsurf.findsurface.FeatureType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +31,6 @@ sealed class UIEffect {
 
 private val Context.dataStore by preferencesDataStore(name = "raw_feature_app_store")
 private val KEY_SEED_RATIO = doublePreferencesKey("seed-radius-ratio")
-private val KEY_ACCURACY_CONSTANT = stringPreferencesKey("accuracy-constant")
-private val KEY_ACCURACY_COEFFICIENT = stringPreferencesKey("accuracy-coefficient")
 
 class AppViewModel(
     application: Application
@@ -127,23 +121,6 @@ class AppViewModel(
         }
     }
 
-    private val _accuracyFunction = MutableStateFlow(
-        LinearFunction()
-    )
-    override val accuracyFunction = _accuracyFunction.asStateFlow()
-
-    override fun updateAccuracyFunction(
-        constant: AccuracyConstant?,
-        coefficient: AccuracyCoefficient?
-    ) {
-        _accuracyFunction.update { s ->
-            s.copy(
-                constant = constant ?: s.constant,
-                coefficient = coefficient ?: s.coefficient
-            )
-        }
-    }
-
     private val _effects = MutableSharedFlow<UIEffect>(extraBufferCapacity = 16)
     override val effects: SharedFlow<UIEffect> = _effects.asSharedFlow()
 
@@ -182,28 +159,17 @@ class AppViewModel(
             val prefs = appContext.dataStore.data.first()
 
             val savedSeedRadiusRatio = (prefs[KEY_SEED_RATIO] ?: 0.5).toFloat()
-            val savedAccuracyConstant = prefs[KEY_ACCURACY_CONSTANT]?.let { AccuracyConstant.valueOf(it) } ?: AccuracyConstant.A5cm
-            val savedAccuracyCoefficient = prefs[KEY_ACCURACY_COEFFICIENT]?.let { AccuracyCoefficient.valueOf(it) } ?: AccuracyCoefficient.B0_5cm
             _radiusData.value = _radiusData.value.copy(
                 seedRadiusRatio = savedSeedRadiusRatio.coerceIn(0.1f, 1.0f),
-            )
-            _accuracyFunction.value = _accuracyFunction.value.copy(
-                constant = savedAccuracyConstant,
-                coefficient = savedAccuracyCoefficient
             )
         }
     }
 
     override fun savePreferenceValues() {
         val seed = _radiusData.value.seedRadiusRatio.toDouble()
-        val accuracyFunction = _accuracyFunction.value
-        val accuracyConstant = accuracyFunction.constant.name
-        val accuracyCoefficient = accuracyFunction.coefficient.name
         viewModelScope.launch {
             appContext.dataStore.edit { prefs ->
                 prefs[KEY_SEED_RATIO] = seed
-                prefs[KEY_ACCURACY_CONSTANT] = accuracyConstant
-                prefs[KEY_ACCURACY_COEFFICIENT] = accuracyCoefficient
             }
         }
     }

@@ -71,7 +71,7 @@ private fun AskUserToScanMoreTexturedEnvironmentView(
         Column(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalAlignment = Alignment.Companion.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Using same smartphone icon as a generic indicator
             Icon(

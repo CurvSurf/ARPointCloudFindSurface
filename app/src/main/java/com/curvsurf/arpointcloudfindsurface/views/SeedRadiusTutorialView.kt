@@ -88,7 +88,7 @@ fun SeedRadiusTutorialView(
                 .align(Alignment.CenterHorizontally)
         ) {
             Icon(
-                painter = painterResource(id = com.curvsurf.arpointcloudfindsurface.R.drawable.pinch_24px),
+                painter = painterResource(id = R.drawable.pinch_24px),
                 contentDescription = "Pinch",
                 modifier = Modifier.size(44.dp),
                 tint = MaterialTheme.colorScheme.onSurface

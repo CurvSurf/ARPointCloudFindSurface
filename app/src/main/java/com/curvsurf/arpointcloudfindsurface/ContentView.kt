@@ -34,12 +34,8 @@ import com.curvsurf.arpointcloudfindsurface.helpers.ARCoreAppGLRenderer
 import com.curvsurf.arpointcloudfindsurface.helpers.MotionTrackingStabilizer
 import com.curvsurf.arpointcloudfindsurface.helpers.OpenGLView
 import com.curvsurf.arpointcloudfindsurface.ui.theme.ARPointCloudFindSurfaceTheme
-import com.curvsurf.arpointcloudfindsurface.views.AccuracyCoefficient
-import com.curvsurf.arpointcloudfindsurface.views.AccuracyConstant
-import com.curvsurf.arpointcloudfindsurface.views.AccuracyPicker
 import com.curvsurf.arpointcloudfindsurface.views.CaptureButton
 import com.curvsurf.arpointcloudfindsurface.views.FeatureTypePicker
-import com.curvsurf.arpointcloudfindsurface.views.LinearFunction
 import com.curvsurf.arpointcloudfindsurface.views.MotionTrackingStabilizationView
 import com.curvsurf.arpointcloudfindsurface.views.PreviewToggleButton
 import com.curvsurf.arpointcloudfindsurface.views.RadiusControlView
@@ -115,12 +111,6 @@ interface ContentViewModel {
         hasToSaveOne: Boolean? = null,
         transactionIsEmpty: Boolean? = null
     )
-    
-    val accuracyFunction: StateFlow<LinearFunction>
-    fun updateAccuracyFunction(
-        constant: AccuracyConstant? = null,
-        coefficient: AccuracyCoefficient? = null
-    )
 
     val effects: SharedFlow<UIEffect>
     val toasts: SharedFlow<String>
@@ -170,14 +160,6 @@ class PreviewViewModel(stabilized: Boolean): ContentViewModel {
         previewEnabled: Boolean?,
         hasToSaveOne: Boolean?,
         transactionIsEmpty: Boolean?
-    ) {}
-
-    private val _accuracyFunction = MutableStateFlow(LinearFunction())
-    override val accuracyFunction = _accuracyFunction.asStateFlow()
-
-    override fun updateAccuracyFunction(
-        constant: AccuracyConstant?,
-        coefficient: AccuracyCoefficient?
     ) {}
 
     private val _effects = MutableSharedFlow<UIEffect>()
@@ -290,18 +272,6 @@ fun ContentView(
                     )
                 )
 
-//                val accuracyFunction by viewModel.accuracyFunction.collectAsStateWithLifecycle()
-//                AccuracyPicker(
-//                    modifier = Modifier.align(Alignment.BottomStart),
-//                    accuracyFunction = accuracyFunction,
-//                    onSetAccuracyFunction = {
-//                        viewModel.updateAccuracyFunction(
-//                            constant = it.constant,
-//                            coefficient = it.coefficient
-//                        )
-//                    }
-//                )
-                
                 FeatureTypePicker(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
