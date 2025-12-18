@@ -2,6 +2,8 @@
 
 **Curv*Surf* FindSurface™** GUIDemo using ARCore raw feature points for Android (Kotlin)
 
+[FindSurface](https://github.com/CurvSurf/FindSurface) / [FindSurface-Android](https://github.com/CurvSurf/FindSurface-Android)
+
 ## Overview
 
 This demo app showcases a real-time application of FindSurface to detect geometric shapes in point clouds provided by ARCore.
